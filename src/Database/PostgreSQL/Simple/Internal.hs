@@ -238,7 +238,7 @@ connectPostgreSQL connstr = do
           version <- PQ.serverVersion conn
           let settings
                 | version < 80200 = "SET datestyle TO ISO;SET client_encoding TO UTF8"
-                | otherwise       = "SET datestyle TO ISO;SET client_encoding TO UTF8;SET standard_conforming_strings TO on"
+                | otherwise       = "SET datestyle TO ISO;SET client_encoding TO UTF8"
           _ <- execute_ wconn settings
           return wconn
       _ -> do
