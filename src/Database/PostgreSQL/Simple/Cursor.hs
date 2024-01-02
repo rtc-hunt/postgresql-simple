@@ -43,7 +43,7 @@ data Cursor = Cursor !Query !Connection
 declareCursor :: Connection -> Query -> IO Cursor
 declareCursor conn q = do
   name <- newTempName conn
-  void $ execute_ conn $ mconcat ["DECLARE ", name, " NO SCROLL CURSOR FOR ", q]
+  void $ execute_ conn $ mconcat ["DECLARE ", name, " CURSOR FOR ", q]
   return $ Cursor name conn
 
 -- | Close the given cursor.
