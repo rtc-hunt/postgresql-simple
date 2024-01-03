@@ -139,6 +139,7 @@ import           Database.PostgreSQL.Simple.Transaction
 import qualified Database.PostgreSQL.LibPQ as PQ
 import qualified Data.ByteString.Char8 as B
 
+import Debug.Trace
 
 -- | Format a query string.
 --
@@ -152,8 +153,8 @@ import qualified Data.ByteString.Char8 as B
 -- correctly.
 formatQuery :: ToRow q => Connection -> Query -> q -> IO ByteString
 formatQuery conn q@(Query template) qs
-    | null xs && '?' `B.notElem` template = return template
-    | otherwise = toByteString <$> buildQuery conn q template xs
+    | null xs && '?' `B.notElem` template = return $ traceShowId template
+    | otherwise = traceShowId <$> toByteString <$> buildQuery conn q template xs
   where xs = toRow qs
 
 -- | Format a query string with a variable number of rows.
