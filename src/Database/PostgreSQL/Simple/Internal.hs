@@ -320,7 +320,7 @@ exec :: Connection
 #if defined(mingw32_HOST_OS)
 exec conn sql =
     withConnection conn $ \h -> do
-        mres <- PQ.exec h sql
+        mres <- PQ.exec h $ traceShowId sql
         case mres of
           Nothing  -> throwLibPQError h "PQexec returned no results"
           Just res -> return res
